@@ -90,7 +90,10 @@ async def get_entry(entry_id: str, entry_service: EntryServiceDependency) -> Ent
     #
     # Hint: Check the update_entry endpoint for similar patterns.
     # See docs/04-get-entry.md for the exercise walkthrough.
-    raise HTTPException(status_code=501, detail="Not implemented - complete this endpoint!")
+    # new code
+    if entry := await entry_service.get_entry(entry_id):
+        return entry
+    raise HTTPException(status_code=404, detail="Entry not found")
 
 
 @router.patch("/entries/{entry_id}")
